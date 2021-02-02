@@ -1,0 +1,9 @@
+
+Ngày 02-02-2021
+1- admin_board
+    1.1- open_stock
+    1.2- set_open_stock
+2- customer_board
+    2.1- add_player_trading
+    2.2- login
+    2.3- register
