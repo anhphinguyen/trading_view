@@ -7,3 +7,8 @@ Ngày 02-02-2021
     2.1- add_player_trading
     2.2- login
     2.3- register
+
+Ngày 03-02-2021
+    *Ghi chú : - tìm hiểu payment
+               - thay đổi : ở tbl_trading_stock, bỏ trường stock_refresh, thêm stock_quantity
+               - cronjob php
