@@ -15,17 +15,17 @@ function is_username($username)
 function is_password($password)
 {
     // $parttern = "/^([A-Z]){1}([\w_\.!@#$%^&*()]+){5,31}$/";
-    $parttern = "/^([A-Z0-9])([\w_\.!@#$%^&*()]+){5,31}$/";
+    $parttern = "/^([\w_\.!@#$%^&*()]+){6,31}$/";
     if (preg_match($parttern, $password))
         return true;
 }
 //@Hàm : is_email
 //@Tham số: chuỗi Email cần kiểm tra
 //@Trả về: True nếu đúng định dạng Email
-function is_email($password)
+function is_email($email)
 {
     $parttern = "/^[A-Za-z0-9_.]{6,32}@([a-zA-Z0-9]{2,12})(.[a-zA-Z]{2,12})+$/";
-    if (preg_match($parttern, $password))
+    if (preg_match($parttern, $email))
         return true;
 }
 

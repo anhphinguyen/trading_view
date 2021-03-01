@@ -26,13 +26,17 @@ if(isset($_REQUEST['money_unit']) && !(empty($_REQUEST['money_unit']))){
     returnError("Nhập money_unit");
 }
 
-$sql = "SELECT * FROM tbl_user_infomation WHERE user_name = '$username'";
+$sql = "SELECT * FROM tbl_user_infomation WHERE BINARY user_name = '$username'";
 $result = db_qr($sql);
 if((db_nums($result)) > 0){
     returnError("Đã tồn tại user");
 }
 
-$sql = "INSERT INTO tbl_user_infomation SET user_name = '$username', user_password = '$password', user_money_unit = '$money_unit'";
+$sql = "INSERT INTO tbl_user_infomation SET 
+        user_name = '$username', 
+        user_password = '$password', 
+        user_money = '10000', 
+        user_money_unit = '$money_unit'";
 if(db_qr($sql)){
     $id_user = mysqli_insert_id($conn);
 
@@ -44,6 +48,7 @@ if(db_qr($sql)){
                 'id_user' => $row['id'],
                 'username' => $row['user_name'],
                 'money' => $row['user_money'],
+                'money_status' => $row['user_money_status'],
                 'money_unit' => $row['user_money_unit']
             );
         }
