@@ -1,5 +1,6 @@
 <?php
-$day_today = time();
+// $day_today = time();
+$day_today = 1614589801;
 
 // $sql = "SELECT * FROM tbl_trading_stock WHERE stock_time_open <= '$day_today' AND stock_time_close >= '$day_today'";
 
@@ -30,13 +31,14 @@ $sql = "SELECT
                     LEFT JOIN tbl_trading_coordinate ON tbl_trading_coordinate.id_session = tbl_trading_session.id
                     WHERE tbl_trading_session.session_time_open <= '$day_today' 
                     AND tbl_trading_session.session_time_close >= '$day_today'";
+// echo $sql;
+// exit();
 
 $result = db_qr($sql);
 $nums = db_nums($result);
 $result_arr = array();
 
 if ($nums > 0) {
-    while ($row = db_assoc($result)) {
         while ($row = db_assoc($result)) {
             $result_item = array(
                 'id_coordinate' => $row['id_coordinate'],
@@ -70,7 +72,6 @@ if ($nums > 0) {
 
         // // echo $time_open;
         // // exit();
-    }
 } else {
     returnError("Chưa có phiên giao dịch này");
 }

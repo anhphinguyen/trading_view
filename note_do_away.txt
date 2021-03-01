@@ -12,3 +12,10 @@ Ngày 03-02-2021
     *Ghi chú : - tìm hiểu payment
                - thay đổi : ở tbl_trading_stock, bỏ trường stock_refresh, thêm stock_quantity
                - cronjob php
+
+
+Ngày 01-03-2021
+ *edit : - add_coordinate
+         - get_coordinate
+         
+ *do tomorrow: - add_player_trading

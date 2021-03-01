@@ -46,13 +46,13 @@ $sql = "UPDATE tbl_trading_session
         SET session_time_present = '$time_present' 
         WHERE session_time_open <= '$time_present' 
         AND session_time_close >= '$time_present'";
-        echo $sql;
-        exit();
+
         
 db_qr($sql);
 
 
 $sql = "SELECT * FROM tbl_trading_coordinate WHERE id_session = '$id_session'";
+
 
 $result = db_qr($sql);
 $nums = db_nums($result);
@@ -62,8 +62,10 @@ if ($nums > 0) {
         $coordinate_xy_arr = substr($coordinate_xy_db, 0, -1) . "," . $coordinate_xy . "]";
         
         $sql = "UPDATE tbl_trading_coordinate SET
-                coordinate_xy = '$coordinate_xy_arr',
+                coordinate_xy = '$coordinate_xy_arr'
                 WHERE id_session = '$id_session'";
+                // echo $sql;
+                // exit();
         if (db_qr($sql)) {
             exit();
         };
@@ -74,7 +76,6 @@ $coordinate_xy_arr = "[" . $coordinate_xy . "]";
 $sql = "INSERT INTO tbl_trading_coordinate SET
         id_stock = '$id_stock',
         id_session = '$id_session',
-        time_present = '$time_present',
         coordinate_xy = '$coordinate_xy_arr',
         coordinate_g = '$coordinate_xy'";
 
@@ -97,8 +98,8 @@ if (db_qr($sql)) {
             while ($row = db_assoc($result)) {
                 $result_item = array(
                     'id_session' => $row['id_session'],
-                    'time_present' => $row['time_present'],
-                    'time_duration' => $row['time_present'] - $time_open,
+                    // 'time_present' => $row['time_present'],
+                    // 'time_duration' => $row['time_present'] - $time_open,
                     'session_number' => $session_number,
                     'coordinate_xy' => $row['coordinate_xy'],
                     'coordinate_g' => $row['coordinate_g']
