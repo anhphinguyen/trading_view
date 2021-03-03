@@ -37,6 +37,7 @@ $time_start = $session_time_open;
 $sql = "INSERT INTO tbl_trading_stock SET
         stock_time_open = '$session_time_open',
         stock_time_close = '$session_time_close',
+        stock_time_living = '$session_time_living',
         stock_quantity = '$quantity'";
 if(db_qr($sql)){
     $id_stock = mysqli_insert_id($conn);
@@ -48,7 +49,6 @@ if(db_qr($sql)){
                 id_stock = '$id_stock',
                 session_number = '$i',
                 session_time_open = '$time_start', 
-                session_time_living = '$session_time_living',
                 session_time_break = '$time_break',
                 session_time_close = '$time_session'";
         if(db_qr($sql)){

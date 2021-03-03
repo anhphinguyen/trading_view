@@ -42,6 +42,14 @@ switch ($detect) {
         break;
     }
     /*customer board*/
+    case 'check_time_block':{
+        include_once 'customer_board/check_time_block.php';
+        break;
+    }
+    case 'create_account_demo':{
+        include_once 'customer_board/create_account_demo.php';
+        break;
+    }
     case 'creat_session_tomorrow':{
         include_once 'customer_board/auto_creat_session_tomorrow.php';
         break;

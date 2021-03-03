@@ -8,7 +8,7 @@ if (isset($_REQUEST['time_break']) && !empty($_REQUEST['time_break'])) {
 
 $sql = "SELECT * FROM tbl_trading_session 
         WHERE session_time_open <= '$time_break'
-        AND session_time_close >= '$time_break'
+        AND session_time_close > '$time_break'
         AND session_time_break <= '$time_break'";
 
 $result = db_qr($sql);
@@ -20,12 +20,13 @@ if ($nums == 0) {
 
 $sql = "SELECT * FROM tbl_trading_session 
         WHERE session_time_open <= '$time_break'
-        AND session_time_close >= '$time_break'";
+        AND session_time_close > '$time_break'";
 $result = db_qr($sql);
 $num = db_nums($result);
 if ($num > 0) {
     while ($row = db_assoc($result)) {
         $id_session = $row['id'];
+        $session_time_close = $row['session_time_close'];
     }
 } else {
     returnError('Chưa có phiên được tạo');
@@ -92,9 +93,9 @@ if ($nums_session > 0) {
 }
 
 $sql_get_coordinate_g = "SELECT coordinate_g FROM tbl_trading_coordinate
-                            WHERE id_session = '$id_session'
-                            AND id_session = '$id_session'";
-
+                            WHERE id_session = '$id_session'";
+// echo $sql_get_coordinate_g;
+// exit();
 $result_get_coordinate_g = db_qr($sql_get_coordinate_g);
 $nums_get_coordinate_g = db_nums($result_get_coordinate_g);
 
@@ -106,7 +107,8 @@ if ($nums_get_coordinate_g > 0) {
 $result_arr = array();
 $result_item = array(
     'result_trade' => $result_trade,
-    'coordinate_g' => $coordinate_g
+    'coordinate_g' => isset($coordinate_g)?$coordinate_g:"null",
+    'time_close' => $session_time_close
 );
 array_push($result_arr, $result_item);
 

@@ -15,7 +15,15 @@ Ngày 03-02-2021
 
 
 Ngày 01-03-2021
+ 
  *edit : - add_coordinate
          - get_coordinate
          
  *do tomorrow: - add_player_trading
+
+ Ngày 02-03-2021
+
+ *meeting: - tài khoản customer_demo sẽ sử dụng trigger để dọn dẹp tài khoản rác
+           - vấn đề ví tiền : cần đảm bảo an toàn cho khách hàng, vì tiền giao dịch là tiền thật -> cần tìm cách bảo mật
+           - vấn đề trade của customer
+           - token sẽ được lưu ở db

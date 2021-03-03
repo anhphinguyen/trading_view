@@ -9,6 +9,10 @@ $sql =  "UPDATE tbl_trading_session SET
             session_status = 'open'
             WHERE session_time_open = '$session_time_open'";
 db_qr($sql);
+$sql =  "UPDATE tbl_trading_session SET
+            session_status = 'close'
+            WHERE session_time_close = '$session_time_open'";
+db_qr($sql);
 
 
 
@@ -45,9 +49,9 @@ if (isset($_REQUEST['time_present']) && !empty($_REQUEST['time_present'])) {
 $sql = "UPDATE tbl_trading_session 
         SET session_time_present = '$time_present' 
         WHERE session_time_open <= '$time_present' 
-        AND session_time_close >= '$time_present'";
+        AND session_time_close > '$time_present'";
 
-        
+
 db_qr($sql);
 
 
@@ -60,14 +64,55 @@ if ($nums > 0) {
     while ($row = db_assoc($result)) {
         $coordinate_xy_db = $row['coordinate_xy'];
         $coordinate_xy_arr = substr($coordinate_xy_db, 0, -1) . "," . $coordinate_xy . "]";
-        
+
         $sql = "UPDATE tbl_trading_coordinate SET
                 coordinate_xy = '$coordinate_xy_arr'
                 WHERE id_session = '$id_session'";
-                // echo $sql;
-                // exit();
+        // echo $sql;
+        // exit();
+        $result_arr = array();
+
         if (db_qr($sql)) {
-            exit();
+            $sql = "SELECT * FROM tbl_trading_session 
+                    WHERE session_time_break <= '$session_time_open' 
+                    AND session_time_close >= '$session_time_open'";
+            $result = db_qr($sql);
+            $nums = db_nums($result);
+            if ($nums > 0) {
+
+                $sql = "SELECT * FROM tbl_trading_coordinate 
+                        WHERE id_session = '$id_session'";
+        
+                $result = db_qr($sql);
+                $nums = db_nums($result);
+                if ($nums > 0) {
+                    while ($row = db_assoc($result)) {
+                        $result_item = array(
+                            'id_session' => $row['id_session'],
+                            'status_trade' => 'block',
+                            'coordinate_g' => $row['coordinate_g']
+                        );
+                        array_push($result_arr, $result_item);
+                    }
+                }
+                reJson($result_arr);
+            }
+            $sql = "SELECT * FROM tbl_trading_coordinate 
+                        WHERE id_session = '$id_session'";
+        
+                $result = db_qr($sql);
+                $nums = db_nums($result);
+                if ($nums > 0) {
+                    while ($row = db_assoc($result)) {
+                        $result_item = array(
+                            'id_session' => $row['id_session'],
+                            'status_trade' => 'trading',
+                            'coordinate_g' => $row['coordinate_g']
+                        );
+                        array_push($result_arr, $result_item);
+                    }
+                }
+                reJson($result_arr);
         };
     }
 }
@@ -98,10 +143,7 @@ if (db_qr($sql)) {
             while ($row = db_assoc($result)) {
                 $result_item = array(
                     'id_session' => $row['id_session'],
-                    // 'time_present' => $row['time_present'],
-                    // 'time_duration' => $row['time_present'] - $time_open,
-                    'session_number' => $session_number,
-                    'coordinate_xy' => $row['coordinate_xy'],
+                    'status_trade' => 'trading',
                     'coordinate_g' => $row['coordinate_g']
                 );
                 array_push($result_arr, $result_item);
